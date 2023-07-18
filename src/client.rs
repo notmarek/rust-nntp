@@ -1,5 +1,3 @@
-use crate::prelude::*;
-
 use std::io::{Read, Write};
 
 use super::capabilities::Capability;
@@ -39,7 +37,7 @@ macro_rules! simple_command_and_check_code {
                     }
                     Ok(resp)
                 }
-                Err(e) => {
+                Err(_e) => {
                     return Err(NNTPError::Other);
                 }
             };
