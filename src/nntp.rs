@@ -205,6 +205,17 @@ pub fn tls_buf_stream(hostname: &str, port: u16) -> Result<BufStream<TlsStream<T
     Ok(BufStream::new(stream))
 }
 
+pub fn buf_stream(hostname: &str, port: u16) -> Result<BufStream<TcpStream>> {
+    let tcp_stream = std::net::TcpStream::connect((hostname, port))?;
+
+    // let connector = native_tls::TlsConnector::new().unwrap();
+    // let stream = connector
+    //     .connect(hostname, tcp_stream)
+    //     .map_err(|_| std::io::Error::new(std::io::ErrorKind::Other, "tls failed"))?;
+    Ok(BufStream::new(tcp_stream))
+}
+
+
 impl<W: Read + Write> NNTPStream<W> {
     /// Creates an NNTP Stream.
     pub fn connect(bufsock: BufStream<W>) -> Result<NNTPStream<W>> {

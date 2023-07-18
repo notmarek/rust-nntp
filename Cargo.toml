@@ -10,7 +10,7 @@ license = "MIT OR Apache-2.0"
 edition = "2018"
 
 [dependencies]
-bufstream = "0.1"
+bufstream = "^0.1"
 prettytable-rs = "0.10"
 native-tls = "0.2"
 pretty-bytes = "0.2"
