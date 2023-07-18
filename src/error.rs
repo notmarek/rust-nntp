@@ -17,12 +17,6 @@ impl From<std::io::Error> for NNTPError {
     }
 }
 
-impl From<std::option::NoneError> for NNTPError {
-    fn from(_: std::option::NoneError) -> Self {
-        NNTPError::NoneError
-    }
-}
-
 impl From<std::string::FromUtf8Error> for NNTPError {
     fn from(_: FromUtf8Error) -> Self {
         NNTPError::FromUTF8Error
