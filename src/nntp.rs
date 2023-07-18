@@ -215,7 +215,6 @@ pub fn buf_stream(hostname: &str, port: u16) -> Result<BufStream<TcpStream>> {
     Ok(BufStream::new(tcp_stream))
 }
 
-
 impl<W: Read + Write> NNTPStream<W> {
     /// Creates an NNTP Stream.
     pub fn connect(bufsock: BufStream<W>) -> Result<NNTPStream<W>> {
@@ -262,7 +261,7 @@ impl<W: Read + Write> NNTPStream<W> {
 
         loop {
             match self.stream.read(&mut buffer[bytes_read..]) {
-                Ok(0) => panic!("empty read"),
+                Ok(0) => return Err(Error::new(ErrorKind::Other, "No bytes to read")),
                 Ok(bytes) => {
                     bytes_read += bytes;
                     println!("got {} bytes", bytes);
@@ -566,8 +565,8 @@ impl<W: Read + Write> NNTPStream<W> {
         let code: isize = FromStr::from_str(v[0]).unwrap();
         let message = v[1];
         if code != expected_code {
-            panic!("expected {}, got {}", expected_code, code);
-            //            return Err(Error::new(ErrorKind::Other, "Invalid response"));
+            //Err("expected {}, got {}", expected_code, code)
+            return Err(Error::new(ErrorKind::Other, "Invalid response"));
         }
 
         Ok((code, message.to_string()))

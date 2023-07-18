@@ -2,12 +2,12 @@ use crate::prelude::*;
 
 use std::io::{Read, Write};
 
-use native_tls::TlsStream;
-use std::net::TcpStream;
-
 use super::capabilities::Capability;
+use super::error::NNTPError;
 use super::response::Response;
 use super::stream::Stream;
+use native_tls::TlsStream;
+use std::net::TcpStream;
 
 use flate2::{Decompress, FlushDecompress};
 
@@ -40,7 +40,7 @@ macro_rules! simple_command_and_check_code {
                     Ok(resp)
                 }
                 Err(e) => {
-                    panic!("got {:?}", e);
+                    return Err(NNTPError::Other);
                 }
             };
 
